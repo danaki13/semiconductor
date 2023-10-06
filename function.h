@@ -10,7 +10,7 @@ public:
 	double Temperature;
 
     void set_values(double, double, double);
-	double pn_diode_ideal();
+	double calculate_output_current();
 }ObjPNDiodeIdeal;
 
 #endif

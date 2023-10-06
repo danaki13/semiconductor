@@ -19,7 +19,7 @@ void pnDiodeIdeal::set_values(double voltV, double currentA, double tempK) {
 	Temperature = tempK;
 }
 
-double pnDiodeIdeal::pn_diode_ideal() {
+double pnDiodeIdeal::calculate_output_current() {
 	double CurrentDiode = 0.0;
 	double eCharge = 1.602e-19, kBoltzmann = 1.3806488e-23;
 
