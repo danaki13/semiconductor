@@ -1,0 +1,1 @@
+double pn_diode_ideal(double);
