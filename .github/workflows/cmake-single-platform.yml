@@ -29,7 +29,10 @@ jobs:
           boost_version: 1.73.0
 
     - name: Print Info
-      run: locate unit_test.hpp
+      run: ls /usr/include/
+
+    - name: Print Info 2
+      run: ls /home/runner/work/semiconductor/semiconductor/boost/boost/test/included/unit_test.hpp
       
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
