@@ -4,9 +4,9 @@ name: CMake on a single platform
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "cmake-patch-1" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "cmake-patch-1" ]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -28,6 +28,9 @@ jobs:
       with:
           boost_version: 1.73.0
 
+    - name: Print Info
+      run: locate unit_test.hpp
+      
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
