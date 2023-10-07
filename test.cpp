@@ -4,17 +4,18 @@
 
 BOOST_AUTO_TEST_CASE(test_pn_diode_ideal) {
 	double tolerance = 1e-5;
-	ObjPNDiodeIdeal.set_values(0.0, 1e-10, 300);
+	PNDiodeIdeal objPNDiodeIdeal;
+	objPNDiodeIdeal.setValues(0.0, 1e-10, 300);
 
-	BOOST_CHECK_EQUAL(ObjPNDiodeIdeal.calculate_output_current(), 0.0);
-	ObjPNDiodeIdeal.Voltage = -1.0;
-	BOOST_CHECK_CLOSE(ObjPNDiodeIdeal.calculate_output_current(), -1.0e-10, tolerance);
-	ObjPNDiodeIdeal.Voltage = 1.0;
-	BOOST_CHECK_CLOSE(ObjPNDiodeIdeal.calculate_output_current(), 6.272071e6, tolerance);
-	ObjPNDiodeIdeal.Voltage = -1.0;
-	ObjPNDiodeIdeal.CurrentSaturartion = 1.0e-8;
-	BOOST_CHECK_CLOSE(ObjPNDiodeIdeal.calculate_output_current(), -1e-8, tolerance);
-	ObjPNDiodeIdeal.Temperature = 200;
-	ObjPNDiodeIdeal.CurrentSaturartion = 1.0e-10;
-	BOOST_CHECK_CLOSE(ObjPNDiodeIdeal.calculate_output_current(), -1e-10, tolerance);
+	BOOST_CHECK_EQUAL(objPNDiodeIdeal.calculateOutputCurrent(), 0.0);
+	objPNDiodeIdeal.voltage = -1.0;
+	BOOST_CHECK_CLOSE(objPNDiodeIdeal.calculateOutputCurrent(), -1.0e-10, tolerance);
+	objPNDiodeIdeal.voltage = 1.0;
+	BOOST_CHECK_CLOSE(objPNDiodeIdeal.calculateOutputCurrent(), 6.272071e6, tolerance);
+	objPNDiodeIdeal.voltage = -1.0;
+	objPNDiodeIdeal.saturation_current = 1.0e-8;
+	BOOST_CHECK_CLOSE(objPNDiodeIdeal.calculateOutputCurrent(), -1e-8, tolerance);
+	objPNDiodeIdeal.temperature = 200;
+	objPNDiodeIdeal.saturation_current = 1.0e-10;
+	BOOST_CHECK_CLOSE(objPNDiodeIdeal.calculateOutputCurrent(), -1e-10, tolerance);
 }

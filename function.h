@@ -1,16 +1,20 @@
-// MyClass.h
+// function.h
+
+#define E_CHARGE 1.602E-19
+#define K_BOLTZMANN 1.3806488E-23
+
 #ifndef FUNCTION_H
 #define FUNCTION_H
 
-class pnDiodeIdeal {
+class PNDiodeIdeal {
 public:
 	/* data */
-	double Voltage;
-	double CurrentSaturartion;
-	double Temperature;
+	double voltage;
+	double saturation_current;
+	double temperature;
 
-    void set_values(double, double, double);
-	double calculate_output_current();
-}ObjPNDiodeIdeal;
+    void setValues(double, double, double);
+	double calculateOutputCurrent();
+};
 
 #endif

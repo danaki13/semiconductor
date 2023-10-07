@@ -1,30 +1,18 @@
 #include <iostream>
 #include <cmath>
+#include "function.h"
 
-class pnDiodeIdeal {
-public:
-	/* data */
-	double Voltage;
-	double CurrentSaturartion;
-	double Temperature;
-	
-	void set_values(double, double, double);
-	double pn_diode_ideal();
-	//~pnDiodeIdeal();
-};
-
-void pnDiodeIdeal::set_values(double voltV, double currentA, double tempK) {
-	Voltage = voltV;
-	CurrentSaturartion = currentA;
-	Temperature = tempK;
+void PNDiodeIdeal::setValues(double voltV, double currentA, double tempK) {
+	voltage = voltV;
+	saturation_current = currentA;
+	temperature = tempK;
 }
 
-double pnDiodeIdeal::calculate_output_current() {
-	double CurrentDiode = 0.0;
-	double eCharge = 1.602e-19, kBoltzmann = 1.3806488e-23;
+double PNDiodeIdeal::calculateOutputCurrent() {
+	double output_current = 0.0;
 
-	CurrentDiode = CurrentSaturartion * (exp((eCharge * Voltage)/(kBoltzmann * Temperature)) - 1);
-	std::cout << Voltage << " " << CurrentDiode << std::endl;
+	output_current = saturation_current * (exp((E_CHARGE * voltage)/(K_BOLTZMANN * temperature)) - 1);
+	std::cout << voltage << " " << output_current << std::endl;
 
-	return CurrentDiode;
+	return output_current;
 }
