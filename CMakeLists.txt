@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(practice VERSION 0.1.0 LANGUAGES C CXX)
 
+find_package(Boost REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
+
 include(CTest)
 enable_testing()
 
