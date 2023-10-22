@@ -13,6 +13,7 @@ add_executable(test_message test_message.cpp message.cpp message.h)
 add_executable(pn_diode example.cpp pn_diode.cpp function.h)
 add_executable(pn_diode_message example.cpp pn_diode.cpp function.h message.cpp message.h)
 
+target_compile_definitions(test_message PRIVATE MESSAGE VERBOSITY=DEBUG)
 target_compile_definitions(pn_diode_message PRIVATE MESSAGE VERBOSITY=DEBUG)
 
 

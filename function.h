@@ -26,12 +26,7 @@ public:
 	std::vector<std::string> datasets;
 
 	void setValues(double, double, double);
-
-	#ifndef MESSAGE
-	double calculateOutputCurrent(); // THIS should have NULL pointer here and then I can merge it?
-	#else
-	double calculateOutputCurrent(Message);
-	#endif
+	double calculateOutputCurrent();
 
 	void writeHeader();
 	void readHeader();

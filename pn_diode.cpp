@@ -11,21 +11,20 @@ void PNDiodeIdeal::setValues(double voltV, double currentA, double tempK) {
 	output_current = 0.0;
 }
 
-#ifndef MESSAGE
 double PNDiodeIdeal::calculateOutputCurrent() {
 	output_current = saturation_current * (exp((E_CHARGE * voltage)/(K_BOLTZMANN * temperature)) - 1);
 
+	#ifdef MESSAGE
+	const char* file = __FILE__;
+	const char* func = __func__;
+	std::string fileString(file);
+	std::string funcString(func);
+
+	printMessage(VERBOSITY, DEBUG, fileString + ":" + std::to_string(__LINE__) + ":" + funcString + ": " + std::to_string(voltage) + " " + std::to_string(output_current));
+	#endif
+
 	return output_current;
 }
-#else
-double PNDiodeIdeal::calculateOutputCurrent(Message objMessage) {
-	output_current = saturation_current * (exp((E_CHARGE * voltage)/(K_BOLTZMANN * temperature)) - 1);
-
-	objMessage.printMessage(DEBUG, std::to_string(voltage) + " " + std::to_string(output_current));
-
-	return output_current;
-}
-#endif
 
 void PNDiodeIdeal::writeHeader() {
 	std::ofstream outfile("test.plt");
@@ -83,5 +82,3 @@ void PNDiodeIdeal::printHeader() { // NEEDS TEST!!!
 	}
 	
 }
-
-//__FILE__ + __LINE__ + ":" + __func__ + ": " +

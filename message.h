@@ -6,13 +6,8 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
-class Message {
-public:
-	/* data */
-	int verbosity;
+void printMessage(int, int, const std::string&);
 
-    void setVerbosity(int);
-    void printMessage(int, const std::string&);
-};
+// Add function to combine debug message: fileString + ":" + std::to_string(__LINE__) + ":" + funcString + ": " + MESSAGE
 
 #endif
