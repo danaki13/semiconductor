@@ -21,5 +21,9 @@ int main(void) {
 	objPNDiodeIdeal.calculateOutputCurrent(objMessage);
 	#endif
 
+	objPNDiodeIdeal.writeHeader();
+	objPNDiodeIdeal.readHeader();
+	objPNDiodeIdeal.printHeader();
+
 	return 0;
 }

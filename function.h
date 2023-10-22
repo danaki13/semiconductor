@@ -1,4 +1,6 @@
 // function.h
+#include <vector>
+#include <string>
 
 #define E_CHARGE 1.602E-19
 #define K_BOLTZMANN 1.3806488E-23
@@ -16,14 +18,24 @@ public:
 	double voltage;
 	double saturation_current;
 	double temperature;
+	double output_current;
+
+	/* File header */
+	std::string version;
+	std::string type;
+	std::vector<std::string> datasets;
 
 	void setValues(double, double, double);
 
 	#ifndef MESSAGE
-	double calculateOutputCurrent();
+	double calculateOutputCurrent(); // THIS should have NULL pointer here and then I can merge it?
 	#else
 	double calculateOutputCurrent(Message);
 	#endif
+
+	void writeHeader();
+	void readHeader();
+	void printHeader();
 };
 
 #endif
