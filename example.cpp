@@ -11,13 +11,12 @@ int main(void) {
 	printMessage(VERBOSITY, ERROR, "Error message ON");
 #endif
 
-	objPNDiodeIdeal.setValues(-1.0, 1e-8, 300);
-
-	objPNDiodeIdeal.calculateOutputCurrent();
-
 	objPNDiodeIdeal.writeHeader();
-	objPNDiodeIdeal.readHeader();
-	objPNDiodeIdeal.printHeader();
+	for(int i = 0; i < 100; i++) {
+		objPNDiodeIdeal.setValues(0.01*i, 1e-10, 300);
+		objPNDiodeIdeal.calculateOutputCurrent();
+		objPNDiodeIdeal.writeData();
+	}
 
 	return 0;
 }

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include <iomanip>
 #include <regex>
 #include "function.h"
 
@@ -32,10 +33,10 @@ void PNDiodeIdeal::writeHeader() {
 	outfile << "Info {" << std::endl;
 	outfile << "  version = 1.0" << std::endl;
 	outfile << "  type = xyplot" << std::endl;
-	outfile << "  datasets  = [\n    \"time\"\n"
-				"    \"drain OuterVoltage\" \"drain TotalCurrent\" \"source OuterVoltage\"\n"
-				"    \"source InnerVoltage\" \"source TotalCurrent\" ]\n" << std::endl;
+	outfile << "  datasets  = [\n    \"voltage\"\n"
+				"    \"saturation current\" \"temperature\" \"output current\" ]" << std::endl;
 	outfile << "}" << std::endl;
+	outfile << "Data {" << std::endl;
 	outfile.close();
 }
 
@@ -48,27 +49,30 @@ void PNDiodeIdeal::readHeader() {
 	std::smatch match;
 
 	while(getline(infile, line)) {
-		if (line.find("version") != std::string::npos) {
+		if(line.find("version") != std::string::npos) {
 			regex_search(line, match, reg_exp_version);
 			version = match.str();
 		}
 
-		if (line.find("type") != std::string::npos) {
+		if(line.find("type") != std::string::npos) {
 			regex_search(line, match, reg_exp_type);
 			type = match.str();
 		}
 
-		if (line.find("datasets") != std::string::npos) {
-			while (line.find("]") == std::string::npos) {
-				getline(infile, line);
-				while (std::regex_search(line, match, reg_exp_datasets)) {
+		if(line.find("datasets") != std::string::npos) {
+			do {
+				while(regex_search(line, match, reg_exp_datasets)) {
 					datasets.push_back(match.str(1));
 					line = match.suffix();
 				}
-			}
+				/* Not necessary to read further, the header reading is completed. */
+				if(line.find("]") != std::string::npos) {
+					infile.close();
+					return;
+				}
+			} while(getline(infile, line));
 		}
-	}
-	
+	}	
 	infile.close();
 }
 
@@ -76,9 +80,57 @@ void PNDiodeIdeal::printHeader() { // NEEDS TEST!!!
 	int count = 0;
 	std::cout << "Version: " + version << std::endl;
 	std::cout << "Type: " + type << std::endl;
-	for (std::string value : datasets) {
-		std::cout << "Dataset[" + std::to_string(count) + "]: " << value << std::endl;
+	for(std::string value : datasets) {
+		std::cout << "Dataset[" << count << "]: " << value << std::endl;
 		count++;
 	}
 	
+}
+
+void PNDiodeIdeal::writeData() {
+	std::ofstream outfile("test.plt", std::ios::app);
+
+	/* Set the output format */
+	outfile << std::scientific << std::showpos << std::setprecision(6);
+	outfile << "\t" << voltage << " "
+					<< saturation_current << " "
+					<< temperature << " "
+					<< output_current
+					<< std::endl;
+
+	outfile.close();
+}
+
+void PNDiodeIdeal::readData() {
+	std::string line;
+	std::ifstream infile("test.plt");
+	std::regex reg_exp_data("[+-]?([0-9]*[.])?([0-9])+e[+-]?[0-9]+");
+	std::smatch match;
+
+	while(getline(infile, line)) {
+		if(line.find("Data {") != std::string::npos) {
+			do {
+				std::vector<double> row;
+				while(regex_search(line, match, reg_exp_data)) {
+					row.push_back(std::stod(match.str()));
+					line = match.suffix();
+				}
+				if(row.size() > 0) {
+					data.push_back(row);
+				}
+			} while(getline(infile, line));
+		}
+	}
+	
+	infile.close();
+}
+
+void PNDiodeIdeal::printData() { // NEEDS TEST!!!
+	std::cout << std::scientific << std::showpos << std::setprecision(6);
+	for(const auto& row : data) {
+		for(double value : row) {
+			std::cout << value << ' ';
+		}
+		std::cout << '\n';
+	}	
 }

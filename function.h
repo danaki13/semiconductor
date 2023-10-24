@@ -25,12 +25,19 @@ public:
 	std::string type;
 	std::vector<std::string> datasets;
 
+	/* Data */
+	std::vector<std::vector<double>> data;
+
 	void setValues(double, double, double);
 	double calculateOutputCurrent();
 
 	void writeHeader();
 	void readHeader();
 	void printHeader();
+
+	void writeData();
+	void readData();
+	void printData();
 };
 
 #endif
