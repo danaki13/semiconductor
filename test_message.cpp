@@ -5,19 +5,6 @@
 
 BOOST_AUTO_TEST_SUITE(TestMessage)
 
-struct cout_redirect {
-	cout_redirect(std::streambuf *new_buffer) 
-		: old(std::cout.rdbuf(new_buffer))
-	{}
-
-	~cout_redirect() {
-		std::cout.rdbuf(old);
-	}
-
-private:
-	std::streambuf *old;
-};
-
 BOOST_AUTO_TEST_CASE(test_debug_1)
 {
 	boost::test_tools::output_test_stream output;

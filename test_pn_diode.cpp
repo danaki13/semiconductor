@@ -121,4 +121,6 @@ BOOST_AUTO_TEST_CASE(test_data_2) {
 	BOOST_CHECK_EQUAL(objPNDiodeIdeal.data[5][2], 300.0);
 }
 
+// TEST printing
+
 BOOST_AUTO_TEST_SUITE_END()
