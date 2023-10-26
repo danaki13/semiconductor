@@ -4,6 +4,8 @@
 #include "configure.h"
 #include "message.h"
 
+#define CFG_FILE_NAME "../test_pn_diode_ideal.cfg"
+
 BOOST_AUTO_TEST_SUITE(TestReadConfigure)
 
 BOOST_AUTO_TEST_CASE(test_cfg_1) {
@@ -21,7 +23,7 @@ BOOST_AUTO_TEST_CASE(test_cfg_1) {
 BOOST_AUTO_TEST_CASE(test_cfg_2) {
 	int flag = 0;
 	std::vector<Input> vectorInput;
-	readCFG("pn_diode_ideal.cfg", vectorInput);
+	readCFG(CFG_FILE_NAME, vectorInput);
 
 	/* Simulation types */
 	BOOST_CHECK_EQUAL(vectorInput[0].simulation, "PN_DIODE_IDEAL");
@@ -37,7 +39,7 @@ BOOST_AUTO_TEST_CASE(test_cfg_2) {
 
 BOOST_AUTO_TEST_CASE(test_cfg_3) {
 	std::vector<Input> vectorInput;
-	readCFG("pn_diode_ideal.cfg", vectorInput);
+	readCFG(CFG_FILE_NAME, vectorInput);
 
 	/* NAME of the variable */
 	BOOST_CHECK_EQUAL(vectorInput[0].variable[0], "voltage");
@@ -56,7 +58,7 @@ BOOST_AUTO_TEST_CASE(test_cfg_3) {
 	BOOST_CHECK_EQUAL(vectorInput[0].variable[2], "temperature");
 	BOOST_CHECK_EQUAL(vectorInput[0].constant[2], 300.0);
 	/* Name of the file where the result is saved */
-	BOOST_CHECK_EQUAL(vectorInput[0].output, "pn_diode_ideal.plt");
+	BOOST_CHECK_EQUAL(vectorInput[0].output, "test_pn_diode_ideal.cfg"); // CEHCK IF FILE IS CREATED!!!
 }
 
 BOOST_AUTO_TEST_CASE(test_cfg_4) {
@@ -65,7 +67,7 @@ BOOST_AUTO_TEST_CASE(test_cfg_4) {
 	{
 		std::vector<Input> vectorInput;
 		cout_redirect guard(output.rdbuf());
-		flag = readCFG("pn_diode_ideal.cfg", vectorInput);
+		flag = readCFG(CFG_FILE_NAME, vectorInput);
 	}
 	BOOST_CHECK_EQUAL(flag, 1); /* Function returns two in case of WARNING. */
 
