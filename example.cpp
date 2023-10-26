@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
-#include "function.h"
+#include "pn_diode.h"
 #include "configure.h"
 
 int main(void) {

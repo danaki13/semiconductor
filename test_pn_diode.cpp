@@ -1,7 +1,7 @@
 #define BOOST_TEST_MODULE PNDiode
 #include <boost/test/included/unit_test.hpp>
 #include <boost/test/tools/output_test_stream.hpp>
-#include "function.h"
+#include "pn_diode.h"
 
 #define TOLERANCE 1e-5
 

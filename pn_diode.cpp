@@ -3,7 +3,7 @@
 #include <cmath>
 #include <iomanip>
 #include <regex>
-#include "function.h"
+#include "pn_diode.h"
 
 void PNDiodeIdeal::setValues(double voltV, double currentA, double tempK) {
 	voltage = voltV;
