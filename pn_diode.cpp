@@ -27,8 +27,8 @@ double PNDiodeIdeal::calculateOutputCurrent() {
 	return output_current;
 }
 
-void PNDiodeIdeal::writeHeader() {
-	std::ofstream outfile("test.plt");
+void PNDiodeIdeal::writeHeader(const std::string &file_name) {
+	std::ofstream outfile(file_name);
 
 	outfile << "Info {" << std::endl;
 	outfile << "  version = 1.0" << std::endl;
@@ -40,9 +40,9 @@ void PNDiodeIdeal::writeHeader() {
 	outfile.close();
 }
 
-void PNDiodeIdeal::readHeader() {
+void PNDiodeIdeal::readHeader(const std::string &file_name) {
 	std::string line;
-	std::ifstream infile("test.plt");
+	std::ifstream infile(file_name);
 	std::regex reg_exp_version("([0-9]*[.])?[0-9]+");
 	std::regex reg_exp_type("\\b\\w+plot\\b");
 	std::regex reg_exp_datasets("\"([^\"]+)\"");
@@ -87,8 +87,8 @@ void PNDiodeIdeal::printHeader() { // NEEDS TEST!!!
 	
 }
 
-void PNDiodeIdeal::writeData() {
-	std::ofstream outfile("test.plt", std::ios::app);
+void PNDiodeIdeal::writeData(const std::string &file_name) {
+	std::ofstream outfile(file_name, std::ios::app);
 
 	/* Set the output format */
 	outfile << std::scientific << std::showpos << std::setprecision(6);
@@ -101,9 +101,9 @@ void PNDiodeIdeal::writeData() {
 	outfile.close();
 }
 
-void PNDiodeIdeal::readData() {
+void PNDiodeIdeal::readData(const std::string &file_name) {
 	std::string line;
-	std::ifstream infile("test.plt");
+	std::ifstream infile(file_name);
 	std::regex reg_exp_data("[+-]?([0-9]*[.])?([0-9])+e[+-]?[0-9]+");
 	std::smatch match;
 

@@ -4,7 +4,12 @@
 #include "pn_diode.h"
 #include "configure.h"
 
-int main(void) {
+int main(int argc, char* argv[]) {
+	if (argc < 2) {
+		std::cout << "Usage: pn_diode filename.cfg" << std::endl; // NEEDS test
+		return 2;
+	}
+
 	PNDiodeIdeal objPNDiodeIdeal;
 	std::vector<Input> vectorInput;
 
@@ -16,8 +21,8 @@ int main(void) {
 #endif
 
 	/* Read from the config file the simulation setup */
-	readCFG("../test_pn_diode_ideal.cfg", vectorInput);
-	objPNDiodeIdeal.writeHeader();
+	readCFG(argv[1], vectorInput);
+	objPNDiodeIdeal.writeHeader(vectorInput[0].output);
 
 	for(int i = vectorInput[0].variable.size(); i >= 0; i--) { /* So that in the CFG I have the variable on top that i want on the inner loop */
 		if(vectorInput[0].points[i] > 1) {
@@ -28,7 +33,7 @@ int main(void) {
 			while(voltage <= vectorInput[0].maximum[i]) {
 				objPNDiodeIdeal.setValues(voltage, 1e-10, 300);
 				objPNDiodeIdeal.calculateOutputCurrent();
-				objPNDiodeIdeal.writeData();
+				objPNDiodeIdeal.writeData(vectorInput[0].output);
 				j++;
 				voltage = vectorInput[0].minimum[i]+step*j;
 			}

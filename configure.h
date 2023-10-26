@@ -17,6 +17,6 @@ struct Input {
 };
 
 
-int readCFG(std::string fileName, std::vector<Input> &vectorInput);
+int readCFG(const std::string &, std::vector<Input> &vectorInput);
 
 #endif

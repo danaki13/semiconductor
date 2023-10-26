@@ -4,19 +4,7 @@
 #include "pn_diode.h"
 
 #define TOLERANCE 1e-5
-
-/*struct cout_redirect {
-	cout_redirect(std::streambuf *new_buffer) 
-		: old(std::cout.rdbuf(new_buffer))
-	{}
-
-	~cout_redirect() {
-		std::cout.rdbuf(old);
-	}
-
-private:
-	std::streambuf *old;
-};*/
+#define FILE_NAME "test.plt"
 
 BOOST_AUTO_TEST_SUITE(TestPNDiodeIdeal)
 
@@ -51,24 +39,24 @@ BOOST_AUTO_TEST_SUITE(TestPNDiodeIdealHeader)
 
 BOOST_AUTO_TEST_CASE(test_header_1) {
 	PNDiodeIdeal objPNDiodeIdeal;
-	objPNDiodeIdeal.writeHeader();
-	objPNDiodeIdeal.readHeader();
+	objPNDiodeIdeal.writeHeader(FILE_NAME);
+	objPNDiodeIdeal.readHeader(FILE_NAME);
 
 	BOOST_CHECK_EQUAL(objPNDiodeIdeal.version, "1.0");
 }
 
 BOOST_AUTO_TEST_CASE(test_header_2) {
 	PNDiodeIdeal objPNDiodeIdeal;
-	objPNDiodeIdeal.writeHeader();
-	objPNDiodeIdeal.readHeader();
+	objPNDiodeIdeal.writeHeader(FILE_NAME);
+	objPNDiodeIdeal.readHeader(FILE_NAME);
 
 	BOOST_CHECK_EQUAL(objPNDiodeIdeal.type, "xyplot");
 }
 
 BOOST_AUTO_TEST_CASE(test_header_3) {
 	PNDiodeIdeal objPNDiodeIdeal;
-	objPNDiodeIdeal.writeHeader();
-	objPNDiodeIdeal.readHeader();
+	objPNDiodeIdeal.writeHeader(FILE_NAME);
+	objPNDiodeIdeal.readHeader(FILE_NAME);
 
 	BOOST_CHECK_EQUAL(objPNDiodeIdeal.datasets[0], "voltage");
 	BOOST_CHECK_EQUAL(objPNDiodeIdeal.datasets[1], "saturation current");
@@ -78,8 +66,8 @@ BOOST_AUTO_TEST_CASE(test_header_3) {
 
 /*BOOST_AUTO_TEST_CASE(test_header_4) {
 	PNDiodeIdeal objPNDiodeIdeal;
-	objPNDiodeIdeal.writeHeader();
-	objPNDiodeIdeal.readHeader();
+	objPNDiodeIdeal.writeHeader(FILE_NAME);
+	objPNDiodeIdeal.readHeader(FILE_NAME);
 
 	boost::test_tools::output_test_stream output;
 	{
@@ -97,9 +85,9 @@ BOOST_AUTO_TEST_CASE(test_data_1) {
 	PNDiodeIdeal objPNDiodeIdeal;
 	objPNDiodeIdeal.setValues(1.0, 1e-10, 300);
 	objPNDiodeIdeal.calculateOutputCurrent();
-	objPNDiodeIdeal.writeData();
+	objPNDiodeIdeal.writeData(FILE_NAME);
 	objPNDiodeIdeal.setValues(0.0, 1e-8, 100);
-	objPNDiodeIdeal.readData();
+	objPNDiodeIdeal.readData(FILE_NAME);
 
 	BOOST_CHECK_EQUAL(objPNDiodeIdeal.data[0][0], 1.0);
 	BOOST_CHECK_EQUAL(objPNDiodeIdeal.data[0][1], 1e-10);
@@ -109,13 +97,13 @@ BOOST_AUTO_TEST_CASE(test_data_1) {
 
 BOOST_AUTO_TEST_CASE(test_data_2) {
 	PNDiodeIdeal objPNDiodeIdeal;
-	objPNDiodeIdeal.writeHeader();
+	objPNDiodeIdeal.writeHeader(FILE_NAME);
 	for(int i = 0; i < 10; i++) {
 		objPNDiodeIdeal.setValues(0.1*i, 1e-10, 300);
 		objPNDiodeIdeal.calculateOutputCurrent();
-		objPNDiodeIdeal.writeData();
+		objPNDiodeIdeal.writeData(FILE_NAME);
 	}
-	objPNDiodeIdeal.readData();
+	objPNDiodeIdeal.readData(FILE_NAME);
 
 	BOOST_CHECK_CLOSE(objPNDiodeIdeal.data[4][3], 5.235574e-04, TOLERANCE);
 	BOOST_CHECK_EQUAL(objPNDiodeIdeal.data[5][2], 300.0);

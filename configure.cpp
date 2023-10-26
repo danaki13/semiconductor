@@ -6,7 +6,7 @@
 #include "configure.h"
 #include "message.h"
 
-int readCFG(std::string fileName, std::vector<Input> &vectorInput) {
+int readCFG(const std::string &file_name, std::vector<Input> &vectorInput) {
 	int flag = -1;
 	Input vectorTemp;
 	std::string line;
@@ -16,7 +16,7 @@ int readCFG(std::string fileName, std::vector<Input> &vectorInput) {
 	std::regex reg_exp_float("[+-]?([0-9]*[.])?([0-9]+)([eE][+-]?[0-9]+)?");
 	std::smatch match;
 
-	std::ifstream infile(fileName);
+	std::ifstream infile(file_name);
 	if(infile) {
 		while(getline(infile, line)) {
 			/* Extract Section */

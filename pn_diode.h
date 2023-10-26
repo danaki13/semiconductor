@@ -31,12 +31,12 @@ public:
 	void setValues(double, double, double);
 	double calculateOutputCurrent();
 
-	void writeHeader();
-	void readHeader();
+	void writeHeader(const std::string &);
+	void readHeader(const std::string &);
 	void printHeader();
 
-	void writeData();
-	void readData();
+	void writeData(const std::string &);
+	void readData(const std::string &);
 	void printData();
 };
 
