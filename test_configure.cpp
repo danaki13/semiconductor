@@ -33,6 +33,7 @@ BOOST_AUTO_TEST_CASE(test_cfg_2) {
 	BOOST_CHECK_EQUAL(vectorInput[4].simulation, "WARNING_POINTS_0");
 	BOOST_CHECK_EQUAL(vectorInput[5].simulation, "WARNING_POINTS_NEGATIVE");
 	BOOST_CHECK_EQUAL(vectorInput[6].simulation, "WARNING_LEFT_IS_LARGER");
+	BOOST_CHECK_EQUAL(vectorInput[7].simulation, "WARNING_LEFT_IS_LARGER_ORDER");
 	BOOST_CHECK_EQUAL(vectorInput.size(), 8);
 	BOOST_CHECK_EQUAL(flag, 0); /* Function returns two in case of correct run. */
 }
@@ -58,7 +59,8 @@ BOOST_AUTO_TEST_CASE(test_cfg_3) {
 	BOOST_CHECK_EQUAL(vectorInput[0].variable[2], "temperature");
 	BOOST_CHECK_EQUAL(vectorInput[0].constant[2], 300.0);
 	/* Name of the file where the result is saved */
-	BOOST_CHECK_EQUAL(vectorInput[0].output, "test_pn_diode_ideal.cfg"); // CEHCK IF FILE IS CREATED!!!
+	BOOST_CHECK_EQUAL(vectorInput[0].output, "test_pn_diode_ideal.plt"); // CEHCK IF FILE IS CREATED!!!
+	BOOST_CHECK_EQUAL(vectorInput[6].output, "test_pn_diode_ideal_2.plt");
 }
 
 BOOST_AUTO_TEST_CASE(test_cfg_4) {
