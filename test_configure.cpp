@@ -8,91 +8,330 @@
 
 BOOST_AUTO_TEST_SUITE(TestReadConfigure)
 
-BOOST_AUTO_TEST_CASE(test_cfg_1) {
+BOOST_AUTO_TEST_CASE(test_cfg_A) {
+	int flag = 0;
+	int test_count = 0, variable_count = 0;
+	std::vector<Input> vectorInput;
+	flag = readCFG(CFG_FILE_NAME, vectorInput);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].simulation, "PN_DIODE_IDEAL");
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "voltage");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 1.0);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+
+	++variable_count;
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "saturation_current");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 1e-10);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+
+	++variable_count;
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "temperature");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 300);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].output, "test_pn_diode_ideal_A.plt");
+
+	BOOST_CHECK_EQUAL(flag, 0); /* Function returns 0 in case of correct run. SHOULD NOT WORK!!! */
+}
+
+BOOST_AUTO_TEST_CASE(test_cfg_B) {
+	int test_count = 1, variable_count = 0;
+	std::vector<Input> vectorInput;
+	readCFG(CFG_FILE_NAME, vectorInput);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "voltage");
+	BOOST_CHECK(std::isnan(vectorInput[test_count].constant[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].minimum[variable_count], -0.5);
+	BOOST_CHECK_EQUAL(vectorInput[test_count].maximum[variable_count], 1.0);
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], 100);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].output, "test_pn_diode_ideal_B.plt");
+}
+
+BOOST_AUTO_TEST_CASE(test_cfg_C) {
+	int test_count = 2, variable_count = 0;
+	std::vector<Input> vectorInput;
+	readCFG(CFG_FILE_NAME, vectorInput);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "saturation_current");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 2e-10);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+
+	++variable_count;
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "temperature");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 320);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+
+	++variable_count;
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "voltage");
+	BOOST_CHECK(std::isnan(vectorInput[test_count].constant[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].minimum[variable_count], -0.5);
+	BOOST_CHECK_EQUAL(vectorInput[test_count].maximum[variable_count], 0.5);
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], 10);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].output, "test_pn_diode_ideal_C.plt");
+}
+
+BOOST_AUTO_TEST_CASE(test_cfg_D) {
+	int test_count = 3, variable_count = 0;
+	std::vector<Input> vectorInput;
+	readCFG(CFG_FILE_NAME, vectorInput);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "voltage");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 0.9);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+
+	++variable_count;
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "saturation_current");
+	BOOST_CHECK(std::isnan(vectorInput[test_count].constant[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].minimum[variable_count], 1e-10);
+	BOOST_CHECK_EQUAL(vectorInput[test_count].maximum[variable_count], 1e-8);
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], 4);
+
+	++variable_count;
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "temperature");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 330);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].output, "test_pn_diode_ideal_D.plt");
+}
+
+BOOST_AUTO_TEST_CASE(test_cfg_E) {
+	int test_count = 4, variable_count = 0;
+	std::vector<Input> vectorInput;
+	readCFG(CFG_FILE_NAME, vectorInput);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "voltage");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 0.7);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+
+	++variable_count;
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "saturation_current");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 1e-8);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+
+	++variable_count;
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "temperature");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 300);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].output, "output.plt");
+}
+
+BOOST_AUTO_TEST_CASE(test_cfg_F) {
+	int test_count = 5, variable_count = 0;
+	std::vector<Input> vectorInput;
+	readCFG(CFG_FILE_NAME, vectorInput);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "saturation_current");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 1.12e-10);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+
+	++variable_count;
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "voltage");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 0.7);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+
+	++variable_count;
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "temperature");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 300);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].output, "output.plt");
+}
+
+BOOST_AUTO_TEST_CASE(test_cfg_G) {
+	int test_count = 6, variable_count = 0;
+	std::vector<Input> vectorInput;
+	readCFG(CFG_FILE_NAME, vectorInput);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "voltage");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 0.8);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+
+	++variable_count;
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "saturation_current");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 1.0e-8);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+
+	++variable_count;
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "temperature");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 300);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].output, "test_pn_diode_ideal_G.plt");
+}
+
+BOOST_AUTO_TEST_CASE(test_cfg_H) {
+	int test_count = 7, variable_count = 0;
+	std::vector<Input> vectorInput;
+	readCFG(CFG_FILE_NAME, vectorInput);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "temperature");
+	BOOST_CHECK(std::isnan(vectorInput[test_count].constant[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].minimum[variable_count], 290);
+	BOOST_CHECK_EQUAL(vectorInput[test_count].maximum[variable_count], 385);
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], 2);
+
+	++variable_count;
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "voltage");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 0.7);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+	
+	++variable_count;
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "saturation_current");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 1.0e-8);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+	
+	BOOST_CHECK_EQUAL(vectorInput[test_count].output, "output.plt");
+}
+
+/* I and J is the same test; that is because test I is not going to be stored, the way I thought to test
+ is through the test_count numbering; meaning if I is correctly not read then IJ count should be only +1
+ compared to H test_count */
+BOOST_AUTO_TEST_CASE(test_cfg_IJ) {
+	int test_count = 8, variable_count = 0;
+	std::vector<Input> vectorInput;
+	readCFG(CFG_FILE_NAME, vectorInput);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "voltage");
+	BOOST_CHECK(std::isnan(vectorInput[test_count].constant[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].minimum[variable_count], -0.5);
+	BOOST_CHECK_EQUAL(vectorInput[test_count].maximum[variable_count], 1.0);
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], 100);
+}
+
+BOOST_AUTO_TEST_CASE(test_cfg_K) {
+	int test_count = 9, variable_count = 0;
+	std::vector<Input> vectorInput;
+	readCFG(CFG_FILE_NAME, vectorInput);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "voltage");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], 2);
+}
+
+BOOST_AUTO_TEST_CASE(test_cfg_L) {
+	int test_count = 10, variable_count = 0;
+	std::vector<Input> vectorInput;
+	readCFG(CFG_FILE_NAME, vectorInput);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "voltage");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], 2);
+}
+
+/* M and N only trigger IGNORE LINE warning messages; tested in warning message output */
+
+BOOST_AUTO_TEST_CASE(test_cfg_O) {
+	int test_count = 13, variable_count = 0;
+	std::vector<Input> vectorInput;
+	readCFG(CFG_FILE_NAME, vectorInput);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "voltage");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 1.0);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+
+	++variable_count;
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "saturation_current");
+	BOOST_CHECK(std::isnan(vectorInput[test_count].constant[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].minimum[variable_count], 1e-10);
+	BOOST_CHECK_EQUAL(vectorInput[test_count].maximum[variable_count], 1e-8);
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], 123);
+
+	++variable_count;
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "temperature");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 221);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+}
+
+BOOST_AUTO_TEST_CASE(test_cfg_P) {
+	int test_count = 14, variable_count = 0;
+	std::vector<Input> vectorInput;
+	readCFG(CFG_FILE_NAME, vectorInput);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "voltage");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 1.0);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+
+	++variable_count;
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "saturation_current");
+	BOOST_CHECK(std::isnan(vectorInput[test_count].constant[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].minimum[variable_count], 1e-11);
+	BOOST_CHECK_EQUAL(vectorInput[test_count].maximum[variable_count], 1e-7);
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], 2);
+
+	++variable_count;
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "temperature");
+	BOOST_CHECK_EQUAL(vectorInput[test_count].constant[variable_count], 222);
+	BOOST_CHECK(std::isnan(vectorInput[test_count].minimum[variable_count]));
+	BOOST_CHECK(std::isnan(vectorInput[test_count].maximum[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], -1);
+}
+
+BOOST_AUTO_TEST_CASE(test_cfg_q) {
+	int test_count = 15, variable_count = 0;
+	std::vector<Input> vectorInput;
+	readCFG(CFG_FILE_NAME, vectorInput);
+
+	BOOST_CHECK_EQUAL(vectorInput[test_count].variable[variable_count], "voltage");
+	BOOST_CHECK(std::isnan(vectorInput[test_count].constant[variable_count]));
+	BOOST_CHECK_EQUAL(vectorInput[test_count].minimum[variable_count], -0.5);
+	BOOST_CHECK_EQUAL(vectorInput[test_count].maximum[variable_count], 1.0);
+	BOOST_CHECK_EQUAL(vectorInput[test_count].points[variable_count], 2);
+}
+
+BOOST_AUTO_TEST_CASE(test_cfg_R) {
 	int flag = 0;
 	boost::test_tools::output_test_stream output;
 	{
 		std::vector<Input> vectorInput;
-		cout_redirect guard(output.rdbuf());
+		cerr_redirect guard(output.rdbuf());
 		flag = readCFG("non_existent.cfg", vectorInput);
 	}
 	BOOST_CHECK(output.is_equal("ERROR: configuration file does not exist!\n"));
-	BOOST_CHECK_EQUAL(flag, 2); /* Function returns two in case of ERROR. */
-}
-
-BOOST_AUTO_TEST_CASE(test_cfg_2) {
-	int flag = 0;
-	std::vector<Input> vectorInput;
-	readCFG(CFG_FILE_NAME, vectorInput);
-
-	/* Simulation types */
-	BOOST_CHECK_EQUAL(vectorInput[0].simulation, "PN_DIODE_IDEAL");
-	BOOST_CHECK_EQUAL(vectorInput[1].simulation, "WARNING_NOT_INT");
-	BOOST_CHECK_EQUAL(vectorInput[2].simulation, "WARNING_NO_OUTPUT");
-	BOOST_CHECK_EQUAL(vectorInput[3].simulation, "WARNING_NO_POINTS");
-	BOOST_CHECK_EQUAL(vectorInput[4].simulation, "WARNING_POINTS_0");
-	BOOST_CHECK_EQUAL(vectorInput[5].simulation, "WARNING_POINTS_NEGATIVE");
-	BOOST_CHECK_EQUAL(vectorInput[6].simulation, "WARNING_LEFT_IS_LARGER");
-	BOOST_CHECK_EQUAL(vectorInput[7].simulation, "WARNING_LEFT_IS_LARGER_ORDER");
-	BOOST_CHECK_EQUAL(vectorInput.size(), 8);
-	BOOST_CHECK_EQUAL(flag, 0); /* Function returns two in case of correct run. */
-}
-
-BOOST_AUTO_TEST_CASE(test_cfg_3) {
-	std::vector<Input> vectorInput;
-	readCFG(CFG_FILE_NAME, vectorInput);
-
-	/* NAME of the variable */
-	BOOST_CHECK_EQUAL(vectorInput[0].variable[0], "voltage");
-	/* If variable has two VALUES than it will expand to MIN/MAX
-	and should be followed by POINTS */
-	BOOST_CHECK(std::isnan(vectorInput[0].constant[0]));
-	BOOST_CHECK_EQUAL(vectorInput[0].minimum[0], -0.5);
-	BOOST_CHECK_EQUAL(vectorInput[0].maximum[0], 1.0);
-	BOOST_CHECK_EQUAL(vectorInput[0].points[0], 100);
-	/* If after variable there is a single value then it is a CONSTANT */
-	BOOST_CHECK_EQUAL(vectorInput[0].variable[1], "saturation_current");
-	BOOST_CHECK_EQUAL(vectorInput[0].constant[1], 1e-10);
-	BOOST_CHECK(std::isnan(vectorInput[0].minimum[1]));
-	BOOST_CHECK(std::isnan(vectorInput[0].maximum[1]));
-	BOOST_CHECK_EQUAL(vectorInput[0].points[1], -1);
-	BOOST_CHECK_EQUAL(vectorInput[0].variable[2], "temperature");
-	BOOST_CHECK_EQUAL(vectorInput[0].constant[2], 300.0);
-	/* Name of the file where the result is saved */
-	BOOST_CHECK_EQUAL(vectorInput[0].output, "test_pn_diode_ideal.plt"); // CEHCK IF FILE IS CREATED!!!
-	BOOST_CHECK_EQUAL(vectorInput[6].output, "test_pn_diode_ideal_2.plt");
-}
-
-BOOST_AUTO_TEST_CASE(test_cfg_4) {
-	int flag = 0;
-	boost::test_tools::output_test_stream output;
-	{
-		std::vector<Input> vectorInput;
-		cout_redirect guard(output.rdbuf());
-		flag = readCFG(CFG_FILE_NAME, vectorInput);
-	}
-	BOOST_CHECK_EQUAL(flag, 1); /* Function returns two in case of WARNING. */
-
-	/* ISSUE with this that it must comply with the same order which makes it  quite inconvinient for the future to adopt. */
-	BOOST_CHECK(output.is_equal("WARNING: points must be an integer, and equal or greater than 1! Setting to default 1.\n"
-								"WARNING: no output is defined, using default.plt!\n"
-								"WARNING: no points are defined for the [voltage] with [-0.5,1]! Setting to default 1.\n"
-								"WARNING: points must be an integer, and equal or greater than 1! Setting to default 1.\n"
-								"WARNING: points must be an integer, and equal or greater than 1! Setting to default 1.\n"
-								"WARNING: for [voltage] with [0.5,-1] the left side value must be smaller than the right! Swapping.\n"
-								"WARNING: for [voltage] with [0.5,-1] the left side value must be smaller than the right! Swapping.\n"
-								));
-
-	// for these i am going to use try/throw/catch
-	/* e.g. 
-		try {
-			if(points < 1) {
-				throw std::runtime_error("ERROR: points must be equal or greater than 1!");
-			} catch (std::runtime_error) {
-				std::cerr << "Error: " << ex.what() << std::endl; // Print basically the message and then ask if ready to quit or set it to 1?
-			}
-
-	*/
+	BOOST_CHECK_EQUAL(flag, 2); /* Function returns 2 in case of ERROR. */
 }
 
 BOOST_AUTO_TEST_SUITE_END()
