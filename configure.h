@@ -18,5 +18,7 @@ struct Input {
 
 
 int readCFG(const std::string &, std::vector<Input> &vectorInput);
+void updateVector(const std::string &, Input &vectorTemp, std::vector<Input> &vectorInput, int &);
+void initialisePNDiodeIdeal(Input &vectorTemp, bool, bool, bool);
 
 #endif
